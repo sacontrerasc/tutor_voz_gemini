@@ -5,16 +5,20 @@ from google.cloud import texttospeech_v1 as texttospeech
 from google.oauth2 import service_account
 from dotenv import load_dotenv
 
-# Cargar variables de entorno
+# Cargar variables de entorno desde el archivo .env
 load_dotenv()
+
+# Obtener la clave de API desde la variable de entorno
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
-# Validación de clave
+# Validación de la clave de API
 if not gemini_api_key:
     raise ValueError("❌ Falta la variable de entorno GEMINI_API_KEY")
 
-# Configuración de cliente de Gemini
-credentials = service_account.Credentials.from_service_account_info(gemini_api_key)
+# Convertir la clave de API a un formato adecuado para el cliente de Google
+credentials = service_account.Credentials.from_service_account_file(
+    os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+)
 client = dialogflow.SessionsClient(credentials=credentials)
 
 # Función para obtener respuesta de Gemini
