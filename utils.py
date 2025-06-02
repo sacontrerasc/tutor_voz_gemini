@@ -58,4 +58,18 @@ def text_to_speech(input_text):
     synthesis_input = texttospeech.SynthesisInput(text=input_text)
     voice = texttospeech.VoiceSelectionParams(
         language_code="en-US",
-        ssml_gender=te_
+        ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+    )
+    audio_config = texttospeech.AudioConfig(
+        audio_encoding=texttospeech.AudioEncoding.MP3
+    )
+    
+    try:
+        response = client.synthesize_speech(input=synthesis_input, voice=voice, audio_config=audio_config)
+        webm_file_path = "temp_audio_play.mp3"
+        with open(webm_file_path, "wb") as out:
+            out.write(response.audio_content)
+        return webm_file_path
+    except Exception as e:
+        print(f"⚠️ Error en síntesis de voz: {e}")
+        return None
