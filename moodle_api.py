@@ -1,16 +1,6 @@
 import os
 import requests
 
-<<<<<<< HEAD
-# Cargar las variables de entorno
-MOODLE_URL = os.getenv("MOODLE_URL")  # Asegúrate de usar la variable en mayúsculas y correctamente configurada
-MOODLE_TOKEN = os.getenv("MOODLE_TOKEN")
-
-# Validación de las variables de entorno
-if not MOODLE_URL or not MOODLE_TOKEN:
-    raise ValueError("❌ Las variables de entorno 'MOODLE_URL' o 'MOODLE_TOKEN' no están definidas.")
-
-=======
 # Cargar variables de entorno
 MOODLE_URL = os.getenv("moodle_url")
 MOODLE_TOKEN = os.getenv("moodle_token")
@@ -19,7 +9,6 @@ if not MOODLE_URL or not MOODLE_TOKEN:
     raise ValueError("❌ Las variables de entorno 'moodle_url' o 'moodle_token' no están definidas.")
 
 # Función genérica para llamar funciones de la API de Moodle
->>>>>>> 039b5b3b23918234b018d73f6e827399afb18d9d
 def call_moodle_function(function_name, params=None):
     if params is None:
         params = {}
@@ -30,20 +19,14 @@ def call_moodle_function(function_name, params=None):
     }
     all_params = {**base_params, **params}
     response = requests.get(MOODLE_URL, params=all_params)
-<<<<<<< HEAD
     
     # Verificación de respuesta
-=======
->>>>>>> 039b5b3b23918234b018d73f6e827399afb18d9d
     if response.status_code == 200:
         return response.json()
     else:
         raise Exception(f"🔴 Error {response.status_code} al llamar a Moodle: {response.text}")
 
-<<<<<<< HEAD
-=======
 # 🔹 Títulos de todos los cursos
->>>>>>> 039b5b3b23918234b018d73f6e827399afb18d9d
 def get_all_course_titles():
     try:
         cursos = call_moodle_function("core_course_get_courses")
@@ -53,10 +36,7 @@ def get_all_course_titles():
     except Exception as e:
         return f"⚠️ Error al obtener los títulos de los cursos: {e}"
 
-<<<<<<< HEAD
-=======
 # 🔹 Contenidos de todos los cursos
->>>>>>> 039b5b3b23918234b018d73f6e827399afb18d9d
 def get_all_course_contents():
     try:
         cursos = call_moodle_function("core_course_get_courses")
@@ -85,8 +65,6 @@ def get_all_course_contents():
 
     return "\n".join(all_contents) if all_contents else "No se pudo recuperar contenido detallado desde Moodle."
 
-<<<<<<< HEAD
-=======
 # 🔹 Contenidos completos de los cursos del usuario por email
 def get_user_course_contents_by_email(email):
     try:
@@ -128,4 +106,3 @@ def get_user_course_contents_by_email(email):
 
     except Exception as e:
         return f"❌ Error al obtener contenidos del usuario: {e}"
->>>>>>> 039b5b3b23918234b018d73f6e827399afb18d9d
