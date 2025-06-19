@@ -8,17 +8,12 @@ from dotenv import load_dotenv
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
 
-# Obtener la clave de API desde la variable de entorno
-gemini_api_key = os.getenv("GEMINI_API_KEY")
-
-# Validación de la clave de API
-if not gemini_api_key:
-    raise ValueError("❌ Falta la variable de entorno GEMINI_API_KEY")
+# Ruta al archivo de credenciales (en Heroku, asegúrate de que el archivo esté en una carpeta accesible)
+# Asumiendo que subiste el archivo a un directorio como "config"
+credentials_path = "config/gemini_credentials.json"  # Esto puede variar dependiendo de tu configuración
 
 # Convertir las credenciales de servicio a un formato adecuado para el cliente de Google
-credentials = service_account.Credentials.from_service_account_file(
-    os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-)
+credentials = service_account.Credentials.from_service_account_file(credentials_path)
 client = dialogflow.SessionsClient(credentials=credentials)
 
 # Función para obtener respuesta de Gemini
@@ -77,3 +72,4 @@ def text_to_speech(input_text):
     except Exception as e:
         print(f"⚠️ Error en síntesis de voz: {e}")
         return None
+
