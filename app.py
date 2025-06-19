@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-from utils import get_answer, text_to_speech, autoplay_audio, speech_to_text
+from utils import get_answer, text_to_speech, speech_to_text
 from moodle_api import get_all_course_titles, get_all_course_contents
 from audio_recorder_streamlit import audio_recorder
 from streamlit_float import *
@@ -155,7 +155,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
 
         with st.spinner("Generando respuesta en audio..."):
             audio_file = text_to_speech(final_response)
-            autoplay_audio(audio_file)
+            st.audio(audio_file, format="audio/mp3")  # Reproduce el archivo de audio generado
 
         st.markdown(f"""
             <div class="chat-bubble assistant-bubble">

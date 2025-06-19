@@ -15,7 +15,7 @@ gemini_api_key = os.getenv("GEMINI_API_KEY")
 if not gemini_api_key:
     raise ValueError("❌ Falta la variable de entorno GEMINI_API_KEY")
 
-# Convertir la clave de API a un formato adecuado para el cliente de Google
+# Convertir las credenciales de servicio a un formato adecuado para el cliente de Google
 credentials = service_account.Credentials.from_service_account_file(
     os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 )
