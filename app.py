@@ -1,13 +1,29 @@
+<<<<<<< HEAD
 import streamlit as st
 import os
 from utils import get_answer, text_to_speech, speech_to_text
 from moodle_api import get_all_course_titles, get_all_course_contents
+=======
+# app.py
+import streamlit as st
+import os
+# ¡CORRECCIÓN AQUÍ! Cambia el nombre de la función
+from utils import get_answer, text_to_speech, autoplay_audio, speech_to_text
+from moodle_api import get_all_course_titles, get_user_course_contents_by_email # <--- CAMBIO AQUÍ
+>>>>>>> 039b5b3b23918234b018d73f6e827399afb18d9d
 from audio_recorder_streamlit import audio_recorder
 from streamlit_float import *
 
 # Inicializa visuales flotantes
 float_init()
 
+<<<<<<< HEAD
+=======
+# Captura el email desde los parámetros de la URL
+params = st.query_params
+email = params.get("email", [""])[0]  # Si no hay email, usa string vacío
+
+>>>>>>> 039b5b3b23918234b018d73f6e827399afb18d9d
 # Estilo, encabezado y componentes visuales
 st.markdown("""
     <style>
@@ -73,7 +89,10 @@ st.markdown("""
     div[data-testid="stAudioRecorder"] span {
         display: none !important;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 039b5b3b23918234b018d73f6e827399afb18d9d
     </style>
 
     <div class='title-block'>
@@ -135,8 +154,14 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.spinner("Pensando..."):
             if not st.session_state.moodle_context:
                 try:
+<<<<<<< HEAD
                     titulos = get_all_course_titles()
                     contenidos = get_all_course_contents()
+=======
+                    titulos = get_all_course_titles() # Esta función no requiere email
+                    # ¡CORRECCIÓN AQUÍ! Usa el nombre de la función correcta
+                    contenidos = get_user_course_contents_by_email(email) # <--- CAMBIO AQUÍ
+>>>>>>> 039b5b3b23918234b018d73f6e827399afb18d9d
                     st.session_state.moodle_context = f"{titulos}\n\n{contenidos}"
                 except Exception as e:
                     st.session_state.moodle_context = f"No se pudo cargar el contenido desde Moodle: {e}"
@@ -155,7 +180,11 @@ if st.session_state.messages[-1]["role"] != "assistant":
 
         with st.spinner("Generando respuesta en audio..."):
             audio_file = text_to_speech(final_response)
+<<<<<<< HEAD
             st.audio(audio_file, format="audio/mp3")  # Reproduce el archivo de audio generado
+=======
+            autoplay_audio(audio_file)
+>>>>>>> 039b5b3b23918234b018d73f6e827399afb18d9d
 
         st.markdown(f"""
             <div class="chat-bubble assistant-bubble">
@@ -163,4 +192,8 @@ if st.session_state.messages[-1]["role"] != "assistant":
             </div>
         """, unsafe_allow_html=True)
         st.session_state.messages.append({"role": "assistant", "content": final_response})
+<<<<<<< HEAD
         os.remove(audio_file)
+=======
+        os.remove(audio_file)
+>>>>>>> 039b5b3b23918234b018d73f6e827399afb18d9d
