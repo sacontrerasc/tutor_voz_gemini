@@ -1,11 +1,13 @@
 import os
 import requests
 
-MOODLE_URL = os.getenv("moodle_url")
-MOODLE_TOKEN = os.getenv("moodle_token")
+# Cargar las variables de entorno
+MOODLE_URL = os.getenv("MOODLE_URL")  # Asegúrate de usar la variable en mayúsculas y correctamente configurada
+MOODLE_TOKEN = os.getenv("MOODLE_TOKEN")
 
+# Validación de las variables de entorno
 if not MOODLE_URL or not MOODLE_TOKEN:
-    raise ValueError("❌ Las variables de entorno 'moodle_url' o 'moodle_token' no están definidas.")
+    raise ValueError("❌ Las variables de entorno 'MOODLE_URL' o 'MOODLE_TOKEN' no están definidas.")
 
 def call_moodle_function(function_name, params=None):
     if params is None:
@@ -17,6 +19,8 @@ def call_moodle_function(function_name, params=None):
     }
     all_params = {**base_params, **params}
     response = requests.get(MOODLE_URL, params=all_params)
+    
+    # Verificación de respuesta
     if response.status_code == 200:
         return response.json()
     else:
@@ -58,3 +62,4 @@ def get_all_course_contents():
             all_contents.append(f"[{course_name}] ❌ Error al cargar contenidos: {e}")
 
     return "\n".join(all_contents) if all_contents else "No se pudo recuperar contenido detallado desde Moodle."
+
